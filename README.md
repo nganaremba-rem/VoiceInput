@@ -32,6 +32,27 @@ micButton.addEventListener('click', () => voiceInput.startOrStopTranscription())
 
 ```
 
+### (Optional) Handling Recording State
+If voiceInput.startOrStopTranscription() is called without any parameter,
+then we can call voiceInput.isRecording() function to get the recording state
+
+[NOTE: if voiceInput.startOrStopTranscription(true) is called using true as argument this voiceInput.isRecording() won't work.]
+
+EXAMPLE:
+```javascript
+    micButton.addEventListener('click', async () => {
+        await voiceInput.startOrStopTranscription()
+
+        if(voiceInput.isRecording()) {
+            // Your UI Logic here: EXAMPLE
+            micButton.style.backgroundColor = 'red'
+        } else {
+            // Your UI Logic here: EXAMPLE
+            micButton.style.backgroundColor = 'white'
+        }
+    })
+```
+
 # Usage 
 ## Specifying Language Example
 ```javascript
