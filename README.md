@@ -13,7 +13,6 @@ npm install @remba/voiceinput
 
 ```javascript
 // Import the VoiceInput package
-// Import the VoiceInput package
 import VoiceInput from '@remba/voiceinput'; 
 
 // Select the Output from the HTML Document (should be HTMLInputElement)
