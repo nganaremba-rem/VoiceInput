@@ -1,6 +1,5 @@
-# VoiceInput Module
 
-VoiceInput is a Web Browser JavaScript module for handling voice input, recording, and transcription.
+# VoiceInput is a Web Browser JavaScript module for handling voice input, recording, and transcription.
 
 ## Installation
 
