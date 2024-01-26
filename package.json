@@ -1,6 +1,6 @@
 {
   "name": "@remba/voiceinput",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Integrated System(統合システム) - Voice to Text Transcription",
   "main": "VoiceInput.js",
   "scripts": {
