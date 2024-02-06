@@ -8,6 +8,7 @@ npm install @remba/voiceinput
 ```
 
 # Usage
+
 ## Simple Example
 
 ```javascript
@@ -18,11 +19,13 @@ import VoiceInput from '@remba/voiceinput';
 // eg: <input type="text" id="inputElementToShowOutput" />
 // or 
 // eg: <textarea id="inputElementToShowOutput"></textarea>
+
 const outputInputElement = document.querySelector('#inputElementToShowOutput'); 
 
 // Select the microphone button 
 const micButton = document.querySelector("#mic-button")
 
+// #### VERY IMPORTANT - PASS HTMLInputElement Only as argument if output element is needed, if you want the RAW output text use the Custom Output example below ###
 // Create an instance for each voice input
 const voiceInput = new VoiceInput(outputInputElement);
 
@@ -33,28 +36,46 @@ micButton.addEventListener('click', () => voiceInput.startOrStopTranscription())
 ```
 
 ### (Optional) Handling Recording State
-If voiceInput.startOrStopTranscription() is called without any parameter,
-then we can call voiceInput.isRecording() function to get the recording state
 
-[NOTE: if voiceInput.startOrStopTranscription(true) is called using true as argument this voiceInput.isRecording() won't work.]
+#### [Recording Started State]
+voiceInput.on('recordingStarted', yourUILogicFunctionHere)
+
+#### [Recording Stopped State]
+voiceInput.on('recordingStopped', yourUILogicFunctionHere)
+
+#### [While Transcription is in process - Loading State]
+voiceInput.on('isLoading', yourUILogicFunctionHere)
+
+#### [When Transcription Finished]
+voiceInput.on('isFinished', yourUILogicFunctionHere)
 
 EXAMPLE:
 ```javascript
-    micButton.addEventListener('click', async () => {
-        await voiceInput.startOrStopTranscription()
+    // (event - recordingStarted) UI Update while recording - EXAMPLE
+voiceInput.on('recordingStarted', () => {
+  micButton.style.backgroundColor = 'red'
+})
 
-        if(voiceInput.isRecording()) {
-            // Your UI Logic here: EXAMPLE
-            micButton.style.backgroundColor = 'red'
-        } else {
-            // Your UI Logic here: EXAMPLE
-            micButton.style.backgroundColor = 'white'
-        }
-    })
+// (event - recordingStopped) UI Update when finished recording - EXAMPLE
+voiceInput.on('recordingStopped', () => {
+  micButton.style.backgroundColor = 'white'
+})
+
+// (event - isLoading) UI Update while transcription is in process - EXAMPLE
+voiceInput.on('isLoading', () => {
+  outputInputElement.value = 'Loading...'
+  outputInputElement.disabled = true
+})
+
+// (event - isFinished) UI Update while transcription is Finished/Done - EXAMPLE
+voiceInput.on('isFinished', () => {
+  outputInputElement.disabled = false
+})
 ```
 
 # Usage 
 ## Specifying Language Example
+
 ```javascript
 // Import the VoiceInput package
 import VoiceInput from '@remba/voiceinput'; 
@@ -80,6 +101,28 @@ micButton.addEventListener('click', () => voiceInput.startOrStopTranscription())
 
 # Usage 
 ## Using Custom Output Example
+
+NOTE: You cannot use BOTH "new VoiceInput(outputHTMLInputField)" with output parameter and call "voiceInput.startOrStopTranscription(true)" with true as parameter (USE EITHER ONE OF THEM)
+
+WRONG IMPLEMENTATION
+```javascript 
+new VoiceInput(outputHTMLInputField)
+voiceInput.startOrStopTranscription(true)
+```
+
+USE THIS SIMPLE METHOD [CORRECT IMPLEMENTATION]
+```javascript 
+new VoiceInput(outputHTMLInputField)
+voiceInput.startOrStopTranscription()
+```
+
+OR THIS METHOD WHICH RETURNS PROMISE [CORRECT IMPLEMENTATION]
+```javascript 
+new VoiceInput()
+voiceInput.startOrStopTranscription(true)
+```
+
+EXAMPLE:
 ```javascript
 // Import the VoiceInput package
 import VoiceInput from '@remba/voiceinput'; 
